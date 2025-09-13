@@ -1,110 +1,282 @@
+/* ============================================
+   CSS RESET & BASE STYLES
+   ============================================ */
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
 }
-#dark-mode {
-  --SandDune: #43382a;
-  --SandDune2: #786a55;
-  --CloudShade1: #b0b0b0;
-  --CloudShade2: #525252;
-  --Orgin: #c9c9c9;
-  --End: #000000;
-  --CoudMain: #9f9f9f;
-  --CastleShadow: #534330;
-  --CastleLight: #7b6648;
-  --CastleShadow2: #31261b;
-  --StoneDark: #31261b;
-  --StoneLight: #54463a;
-  --Border: #000000;
-  --Flag: #591515;
-  --FlagDark: #400000;
-}
+
+/* ============================================
+   CSS CUSTOM PROPERTIES (VARIABLES)
+   ============================================ */
+
+/* Light Theme Colors */
 :root {
-  --SandDune: #bc976c;
-  --SandDune2: #f1ce9f;
-  --CloudShade1: #f1fcfd;
-  --CloudShade2: #dcf3fa;
-  --Orgin: #fff;
-  --End: #7ac6ea;
-  --CoudMain: #ffffff;
-  --CastleShadow: #af8a61;
-  --CastleLight: #efcd9e;
-  --CastleShadow2: #a07d56;
-  --StoneDark: #755f4e;
-  --StoneLight: #a68b72;
-  --Border: #312a22;
-  --Flag: #c24b48;
-  --FlagDark: #8c3938;
+  /* Sand Dune Colors */
+  --sand-dune-primary: #bc976c;
+  --sand-dune-secondary: #f1ce9f;
+  
+  /* Cloud & Sky Colors */
+  --cloud-shade-light: #f1fcfd;
+  --cloud-shade-medium: #dcf3fa;
+  --sky-origin: #fff;
+  --sky-end: #7ac6ea;
+  --cloud-main: #ffffff;
+  
+  /* Castle Colors */
+  --castle-shadow-primary: #af8a61;
+  --castle-light: #efcd9e;
+  --castle-shadow-secondary: #a07d56;
+  
+  /* Stone Colors */
+  --stone-dark: #755f4e;
+  --stone-light: #a68b72;
+  
+  /* Accent Colors */
+  --border-color: #312a22;
+  --flag-primary: #c24b48;
+  --flag-dark: #8c3938;
 }
+
+/* Dark Theme Colors */
+#dark-mode {
+  /* Sand Dune Colors */
+  --sand-dune-primary: #43382a;
+  --sand-dune-secondary: #786a55;
+  
+  /* Cloud & Sky Colors */
+  --cloud-shade-light: #b0b0b0;
+  --cloud-shade-medium: #525252;
+  --sky-origin: #c9c9c9;
+  --sky-end: #000000;
+  --cloud-main: #9f9f9f;
+  
+  /* Castle Colors */
+  --castle-shadow-primary: #534330;
+  --castle-light: #7b6648;
+  --castle-shadow-secondary: #31261b;
+  
+  /* Stone Colors */
+  --stone-dark: #31261b;
+  --stone-light: #54463a;
+  
+  /* Accent Colors */
+  --border-color: #000000;
+  --flag-primary: #591515;
+  --flag-dark: #400000;
+}
+/* ============================================
+   SVG FILL CLASSES
+   ============================================ */
+
+/* Sand Dune Fill Classes */
+.sand-dune-primary {
+  fill: var(--sand-dune-primary);
+}
+
+.sand-dune-secondary {
+  fill: var(--sand-dune-secondary);
+}
+
+/* Cloud & Sky Fill Classes */
+.cloud-shade-light {
+  fill: var(--cloud-shade-light);
+}
+
+.cloud-shade-medium {
+  fill: var(--cloud-shade-medium);
+}
+
+.sky-origin {
+  fill: var(--sky-origin);
+}
+
+.sky-end {
+  fill: var(--sky-end);
+}
+
+.cloud-main {
+  fill: var(--cloud-main);
+}
+
+/* Castle Fill Classes */
+.castle-shadow-primary {
+  fill: var(--castle-shadow-primary);
+}
+
+.castle-shadow-secondary {
+  fill: var(--castle-shadow-secondary);
+}
+
+.castle-light {
+  fill: var(--castle-light);
+}
+
+/* Stone Fill Classes */
+.stone-dark {
+  fill: var(--stone-dark);
+}
+
+.stone-light {
+  fill: var(--stone-light);
+}
+
+/* Accent Fill Classes */
+.border-color {
+  fill: var(--border-color);
+}
+
+.flag-primary {
+  fill: var(--flag-primary);
+}
+
+.flag-dark {
+  fill: var(--flag-dark);
+}
+
+
+/* ============================================
+   SAND DUNE POSITIONING
+   ============================================ */
+
+#SandDune1 {
+  flex-shrink: 0;
+  bottom: clamp(-8rem, -12vw, -2rem);
+  left: 0;
+  right: 0;
+  width: 100vw;
+  height: auto;
+  position: absolute;
+  fill: var(--sand-dune-secondary, #f1ce9f);
+  stroke-width: 1px;
+  stroke: var(--castle-shadow-primary, #af8a61);
+  z-index: 7;
+}
+
+#SandDune2 {
+  bottom: 0;
+  right: 0;
+  width: min(42vw, 520px);
+  height: auto;
+  position: absolute;
+  fill: var(--sand-dune-primary, #bc976c);
+  stroke-width: 1px;
+  stroke: var(--sand-dune-secondary, #f1ce9f);
+  z-index: 10;
+}
+
+#SandDune3 {
+  position: absolute;
+  fill: var(--sand-dune-secondary, #bc976c);
+  bottom: clamp(1rem, 25vw, 18rem);
+  right: clamp(1rem, 0vw, 18rem);
+  width: min(30vw, 420px);
+  height: auto;
+  stroke: black;
+  z-index: 11;
+  flex-shrink: 0;
+}
+
+#SandDune4 {
+  fill: var(--sand-dune-secondary, #f1ce9f);
+  right: 0;
+  position: absolute;
+  bottom: clamp(2rem, 12vw, 14rem);
+  width: min(36vw, 560px);
+  height: auto;
+  z-index: 8;
+  flex-shrink: 0;
+}
+
+/* ============================================
+   CASTLE & ROCK POSITIONING
+   ============================================ */
+
+#main-rock {
+  position: absolute;
+  left: clamp(1rem, 12vw, 14rem);
+  bottom: clamp(1rem, 6vw, 8rem);
+  width: min(10vw, 140px);
+  height: auto;
+  z-index: 9;
+}
+
+#castle-svg {
+  position: absolute;
+  right: clamp(1rem, 14vw, 16rem);
+  bottom: clamp(2rem, 17vw, 17rem);
+  width: min(30vw, 520px);
+  height: auto;
+  z-index: 8;
+  flex-shrink: 0;
+}
+
+/* ============================================
+   SVG PATH OVERRIDES
+   ============================================ */
+
+/* Style inlined dune SVG paths to follow theme variables */
+#sandDune1 path {
+  fill: var(--sand-dune-secondary);
+  stroke: var(--castle-shadow-primary);
+}
+
+#sandDune2 path {
+  fill: var(--sand-dune-primary);
+}
+
+#sandDune3 path {
+  fill: var(--sand-dune-primary);
+}
+
+#sandDune4 path {
+  fill: var(--sand-dune-secondary);
+}
+
+/* ============================================
+   LAYOUT & BASE COMPONENTS
+   ============================================ */
 
 body {
   height: 100dvh;
   width: 100dvw;
   background: radial-gradient(
     144.72% 106.94% at 57.15% 9.62%,
-    var(--CloudShade1) 0%,
-    var(--CloudShade2) 13.94%,
-    var(--End) 100%
+    var(--cloud-shade-light) 0%,
+    var(--cloud-shade-medium) 13.94%,
+    var(--sky-end) 100%
   );
   overflow: hidden;
 }
-#sandDune1 {
-  flex-shrink: 0;
-  bottom: 0px;
-  width: 1244.781px;
-  height: 325px;
-  left: 0px;
-  position: absolute;
-  fill: var(--Sand-Dune-2, #f1ce9f);
-  stroke-width: 1px;
-  stroke: var(--CastleShadow, #af8a61);
-  z-index: 7;
+
+#app {
+  position: relative;
+  min-height: 100dvh;
 }
-#sandDune2 {
+
+img {
+  display: block;
+  height: auto;
+  max-width: 100%;
+}
+
+/* ============================================
+   BACKGROUND ELEMENTS
+   ============================================ */
+
+#bg {
+  position: absolute;
   bottom: 0;
+  left: 0;
   right: 0;
-
-  width: 983px;
-  height: 441px;
-
-  position: absolute;
-  fill: var(--Sand-Dune, #bc976c);
-  stroke-width: 1px;
-  stroke: var(--Sand-Dune-2, #f1ce9f);
-  z-index: 10;
+  height: 40dvh;
+  background: var(--sand-dune-primary);
 }
 
-#sandDune3 {
-  position: absolute;
-  fill: var(--Sand-Dune, #bc976c);
-  bottom: 50px;
-  left: 287px;
-  z-index: 6;
-  width: 1000px;
-  height: 249px;
-  flex-shrink: 0;
-}
-#sandDune4 {
-  fill: var(--Sand-Dune-2, #f1ce9f);
-  right: 0px;
-  position: absolute;
-  bottom: 200px;
-  z-index: 7;
-  flex-shrink: 0;
-}
-#rock {
+#line {
   position: absolute;
   left: 200px;
-  bottom: 100px;
-  z-index: 9;
-}
-#castle {
-  position: absolute;
-  right: 200px;
-  bottom: 140px;
-  z-index: 8;
-  width: 855.548px;
-  height: 650.563px;
-  flex-shrink: 0;
+  bottom: 200px;
+  z-index: 10;
 }
