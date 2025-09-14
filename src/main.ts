@@ -1,6 +1,8 @@
 import Castle from "./helper/castle";
 import MainRock from "./helper/MainRock";
 import moon from "./helper/moon";
+import NightCastle from "./helper/NightCastle";
+import River from "./helper/River";
 import SandDune1 from "./helper/SandDune1";
 import SandDune2 from "./helper/SandDune2";
 import SandDune3 from "./helper/SandDune3";
@@ -8,6 +10,7 @@ import SandDune4 from "./helper/SandDune4";
 import SmallRock2 from "./helper/SmallRock2";
 import SmallRock3 from "./helper/SmallRock3";
 import Sun from "./helper/sun";
+import Tree from "./helper/Tree";
 const html =
   Castle() +
   MainRock() +
@@ -18,7 +21,10 @@ const html =
   SmallRock2() +
   SmallRock3() +
   Sun() +
-  moon();
+  moon() +
+  Tree() +
+  River() +
+  NightCastle();
 const app = document.querySelector<HTMLDivElement>("#app")!;
 app.innerHTML = `${html}<div id="bg"></div>`;
 let hasToggledInCycle = false;
