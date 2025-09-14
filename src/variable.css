@@ -1,0 +1,125 @@
+/* ============================================
+   CSS CUSTOM PROPERTIES (VARIABLES)
+   ============================================ */
+:root {
+  /* Sand Dune Colors */
+  --sand-dune-primary: #bc976c;
+  --sand-dune-secondary: #f1ce9f;
+
+  /* Cloud & Sky Colors */
+  --cloud-shade-light: #f1fcfd;
+  --cloud-shade-medium: #dcf3fa;
+  --sky-origin: #fff;
+  --sky-end: #7ac6ea;
+  --cloud-main: #ffffff;
+
+  /* Castle Colors */
+  --castle-shadow-primary: #af8a61;
+  --castle-light: #efcd9e;
+  --castle-shadow-secondary: #a07d56;
+
+  /* Stone Colors */
+  --stone-dark: #755f4e;
+  --stone-light: #a68b72;
+
+  /* Accent Colors */
+  --border-color: #312a22;
+  --flag-primary: #c24b48;
+  --flag-dark: #8c3938;
+}
+
+/* Dark Theme Colors */
+.dark-mode {
+  /* Sand Dune Colors */
+  --sand-dune-primary: #373449;
+  --sand-dune-secondary: #4D506C;
+
+  /* Cloud & Sky Colors */
+  --cloud-shade-light: #576C96;
+  --cloud-shade-medium: #3D4C76;
+  --sky-origin: #23294B;
+  --sky-end: #060D1E;
+  --cloud-main: #3E4C74;
+
+  /* Castle Colors */
+  --castle-shadow-primary: #292438;
+  --castle-light: #3F4261;
+  --castle-shadow-secondary: #292538;
+
+  /* Stone Colors */
+  --stone-dark: #1C1A2F;
+  --stone-light: #2A2B48;
+
+  /* Accent Colors */
+  --border-color: #111119;
+  --flag-primary: #271126;
+  --flag-dark: #1E0C1C;
+}
+/* ============================================
+   SVG FILL CLASSES
+   ============================================ */
+
+/* Sand Dune Fill Classes */
+.sand-dune-primary {
+  fill: var(--sand-dune-primary);
+}
+
+.sand-dune-secondary {
+  fill: var(--sand-dune-secondary);
+}
+
+/* Cloud & Sky Fill Classes */
+.cloud-shade-light {
+  fill: var(--cloud-shade-light);
+}
+
+.cloud-shade-medium {
+  fill: var(--cloud-shade-medium);
+}
+
+.sky-origin {
+  fill: var(--sky-origin);
+}
+
+.sky-end {
+  fill: var(--sky-end);
+}
+
+.cloud-main {
+  fill: var(--cloud-main);
+}
+
+/* Castle Fill Classes */
+.castle-shadow-primary {
+  fill: var(--castle-shadow-primary);
+}
+
+.castle-shadow-secondary {
+  fill: var(--castle-shadow-secondary);
+}
+
+.castle-light {
+  fill: var(--castle-light);
+}
+
+/* Stone Fill Classes */
+.stone-dark {
+  fill: var(--stone-dark);
+}
+
+.stone-light {
+  fill: var(--stone-light);
+}
+
+/* Accent Fill Classes */
+.border-color {
+  fill: var(--border-color);
+}
+
+.flag-primary {
+  fill: var(--flag-primary);
+}
+
+.flag-dark {
+  fill: var(--flag-dark);
+}
