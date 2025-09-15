@@ -18,7 +18,7 @@
   fill: var(--sand-dune-secondary, #f1ce9f);
   stroke-width: 1px;
   stroke: var(--castle-shadow-primary, #af8a61);
-  z-index: 7;
+  z-index: 10;
 }
 
 #SandDune2 {
@@ -36,12 +36,12 @@
 #SandDune3 {
   position: absolute;
   fill: var(--sand-dune-secondary, #bc976c);
-  bottom: clamp(1rem, 10vw, 15rem);
+  bottom: clamp(1rem, 8vw, 13rem);
   right: 0;
-  width: min(40vw, 60rem);
+  width: min(60vw, 50rem);
   height: auto;
   stroke: black;
-  z-index: 6;
+  z-index: 7;
   flex-shrink: 0;
 }
 
@@ -53,7 +53,7 @@
   right: clamp(1rem, 8vw, 11rem);
   width: min(60vw, 50rem);
   height: auto;
-  z-index: 8;
+  z-index: 7;
   flex-shrink: 0;
 }
 
@@ -100,14 +100,23 @@
 
 #castle-svg {
   position: absolute;
-  right: clamp(1rem, 14vw, 16rem);
-  bottom: clamp(2rem, 14vw, 15rem);
+  right: clamp(1rem, 8.5vw, 13rem);
+  bottom: clamp(2rem, 13vw, 14.5rem);
   width: min(30vw, 520px);
   height: auto;
   z-index: 8;
   flex-shrink: 0;
 }
-
+#NightCastle {
+  position: absolute;
+  right: clamp(1rem, 8.5vw, 13rem);
+  bottom: clamp(2rem, 13vw, 14.5rem);
+  width: min(30vw, 520px);
+  height: auto;
+  z-index: 8;
+  flex-shrink: 0;
+  opacity: 0;
+}
 /* ============================================
    SVG PATH OVERRIDES
    ============================================ */
@@ -209,24 +218,15 @@ body.dark-mode #sun {
 body.dark-mode #moon {
   opacity: 1;
 }
-#NightCastle {
-  position: absolute;
-  right: clamp(1rem, 14vw, 16rem);
-  bottom: clamp(2rem, 14vw, 15rem);
-  width: min(30vw, 520px);
-  height: auto;
-  z-index: 8;
-  flex-shrink: 0;
-  opacity: 0;
-}
+
 #Tree {
   opacity: 0;
   position: absolute;
-  right: clamp(1rem, 30vw, 32rem);
-  bottom: clamp(2rem, 14vw, 15rem);
+  right: clamp(1rem, 28vw, 30rem);
+  bottom: clamp(2rem, 12vw, 14rem);
   width: min(30vw, 520px);
   height: auto;
-  z-index: 7;
+  z-index: 6;
 }
 #River {
   opacity: 0;
@@ -235,7 +235,7 @@ body.dark-mode #moon {
   bottom: clamp(2rem, 17vw, 10rem);
   width: min(40vw, 720px);
   height: auto;
-  z-index: 6;
+  z-index: 5;
 }
 body.dark-mode #NightCastle {
   opacity: 1;
@@ -246,6 +246,163 @@ body.dark-mode #Tree {
 body.dark-mode #River {
   opacity: 1;
 }
-body.dark-mode #castle-svg {
-  opacity: 0;
+
+#music {
+  background-image: url("/assets/audio.gif");
+  width: 0.5rem;
+  height: 0.5rem;
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  border-radius: 3px;
+  background-color: transparent;
+  border: none;
+  margin: 0 auto;
+}
+.disable {
+  background-color: rgb(118, 118, 118);
+}
+body.dark-mode #music {
+  background-color: rgba(240, 248, 255, 0.579);
+}
+#pedestal-clue {
+  font-family: "Rubik";
+  cursor: pointer;
+  width: 15.125rem;
+  flex-shrink: 0;
+  aspect-ratio: 65/71;
+  z-index: 11;
+  background-size: cover;
+  background-image: url("/assets/pedestal.svg");
+  position: absolute;
+  bottom: 4rem;
+  left: 4rem;
+  padding: 0 2em;
+  font-size: 1.3em;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  font-weight: 500;
+}
+body.dark-mode #pedestal-clue {
+  width: 14.3rem;
+  height: 25rem;
+  padding: 0 3em;
+  background-image: url("/assets/pedes_night.svg");
+  font-family: "MedievalSharp", serif;
+}
+
+#archway-lock {
+  width: 15.125rem;
+  height: 15.875rem;
+  flex-shrink: 0;
+  aspect-ratio: 65/71;
+  z-index: 11;
+  background-size: cover;
+  position: absolute;
+  bottom: 4rem;
+  right: 4rem;
+  padding: 0 2em;
+  font-size: 1.3em;
+  display: flex;
+  background-color: orange;
+  align-items: center;
+  text-align: center;
+  font-weight: 500;
+}
+#story-text {
+  color: var(--text, #2c1810);
+  position: fixed;
+  top: 2dvh;
+  left: 2dvh;
+  width: 22rem;
+  max-height: 8rem;
+  padding: 1.2rem 1.5rem;
+  font-family: "MedievalSharp", serif;
+  font-size: 1.1rem;
+  line-height: 1.4;
+  background: rgba(240, 235, 220, 0.95);
+  border: 3px solid #8b4513;
+  border-radius: 12px;
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(5px);
+  z-index: 12;
+  overflow-y: auto;
+  transition: all 0.3s ease;
+}
+
+#story-text:hover {
+  background: rgba(245, 240, 225, 0.98);
+  transform: translateY(-1px);
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+.disable {
+}
+
+body.dark-mode #story-text {
+  color: #e8dcc0;
+  background: rgba(40, 35, 30, 0.95);
+  border-color: #654321;
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode #story-text:hover {
+  background: rgba(50, 45, 40, 0.98);
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/*body.dark-mode #magic-sphere {
+  opacity: 1;
+}*/
+#Queen {
+}
+
+/* ============================================
+   MUSIC BUTTON STYLES
+   ============================================ */
+
+#music {
+  width: 24px;
+  height: 24px;
+  background: center / cover no-repeat url("/assets/audio.gif");
+  border: none;
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  cursor: pointer;
+  outline: none;
+  display: inline-block;
+  z-index: 1000;
+}
+
+body.dark-mode #music {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 4px;
+  backdrop-filter: blur(5px);
+}
+
+.music-cross {
+  position: absolute;
+  right: 4px;
+  top: -4px;
+  font-size: 20px;
+  line-height: 20px;
+  color: red;
+  margin: 0 auto;
+  font-weight: 700;
+  text-shadow: 0 0 2px #000;
+  pointer-events: none;
+  display: block;
+}
+
+.music-cross.hidden {
+  display: none;
 }

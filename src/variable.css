@@ -1,8 +1,17 @@
+@font-face {
+  font-family: "MedievalSharp";
+  src: url("/font/MedievalSharp-Regular.ttf");
+}
+@font-face {
+  font-family: "Rubik";
+  src: url("/font/RubikBurned-Regular.ttf");
+}
 /* ============================================
    CSS CUSTOM PROPERTIES (VARIABLES)
    ============================================ */
 :root {
   /* Sand Dune Colors */
+  --text: black;
   --sand-dune-primary: #bc976c;
   --sand-dune-secondary: #f1ce9f;
 
@@ -31,29 +40,30 @@
 /* Dark Theme Colors */
 .dark-mode {
   /* Sand Dune Colors */
+  --text: #fff;
   --sand-dune-primary: #373449;
-  --sand-dune-secondary: #4D506C;
+  --sand-dune-secondary: #4d506c;
 
   /* Cloud & Sky Colors */
-  --cloud-shade-light: #576C96;
-  --cloud-shade-medium: #3D4C76;
-  --sky-origin: #23294B;
-  --sky-end: #060D1E;
-  --cloud-main: #3E4C74;
+  --cloud-shade-light: #576c96;
+  --cloud-shade-medium: #3d4c76;
+  --sky-origin: #23294b;
+  --sky-end: #060d1e;
+  --cloud-main: #3e4c74;
 
   /* Castle Colors */
   --castle-shadow-primary: #292438;
-  --castle-light: #3F4261;
+  --castle-light: #3f4261;
   --castle-shadow-secondary: #292538;
 
   /* Stone Colors */
-  --stone-dark: #1C1A2F;
-  --stone-light: #2A2B48;
+  --stone-dark: #1c1a2f;
+  --stone-light: #2a2b48;
 
   /* Accent Colors */
   --border-color: #111119;
   --flag-primary: #271126;
-  --flag-dark: #1E0C1C;
+  --flag-dark: #1e0c1c;
 }
 /* ============================================
    SVG FILL CLASSES

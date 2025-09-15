@@ -6,7 +6,6 @@ import River from "./helper/River";
 import SandDune1 from "./helper/SandDune1";
 import SandDune2 from "./helper/SandDune2";
 import SandDune3 from "./helper/SandDune3";
-import SandDune4 from "./helper/SandDune4";
 import SmallRock2 from "./helper/SmallRock2";
 import SmallRock3 from "./helper/SmallRock3";
 import Sun from "./helper/sun";
@@ -17,7 +16,6 @@ const html =
   SandDune1() +
   SandDune2() +
   SandDune3() +
-  SandDune4() +
   SmallRock2() +
   SmallRock3() +
   Sun() +
@@ -26,14 +24,128 @@ const html =
   River() +
   NightCastle();
 const app = document.querySelector<HTMLDivElement>("#app")!;
-app.innerHTML = `${html}<div id="bg"></div>`;
-let hasToggledInCycle = false;
+app.innerHTML = `${html}<div id="bg">
+</div>
+<button id="music" aria-label="Toggle music"></button>
+<div id="pedestal-clue" class="interactive-object"></div>
+<div id="archway-lock" class="interactive-object">Archwawy</div>
+<div id="story-text"></div>
+`;
+
+//@constants
+let TIME = 5; // in seconds for full cycle
+const orbSize = 80;
+
+//@global variable
 let lastProgress = 0;
-const TIME = 10; // in seconds for full cycle
+let hasToggledInCycle = false;
+let isNight = false;
+let animationFrameId: number | null = null; // To manage the animation loop
+let playerHasTool = false;
+let cycleStage = 0; // 0: first day, 1: night, 2: back to day and lock
+
+// audio state
+let currentTrack: "day" | "night" | "neutral" = "day";
+const audio = new Audio();
+audio.preload = "auto";
+audio.loop = true;
+const audioSources = {
+  day: "/audio/day.ogg",
+  night: "/audio/night.mp3",
+  neutral: "/audio/neutral.ogg",
+};
+audio.src = audioSources.day;
+
+// Initialize audio to play on page load
+audio.addEventListener(
+  "canplaythrough",
+  () => {
+    if (audio.paused) {
+      audio.play().catch(() => {
+        // Auto-play blocked, user will need to click music button
+      });
+    }
+  },
+  { once: true },
+);
+
+
+//elements
 const SUN = document.getElementById("sun") as HTMLElement;
 const MOON = document.getElementById("moon") as HTMLElement;
-let animationFrameId: number | null = null; // To manage the animation loop
-const orbSize = 80;
+const pedestal = document.getElementById("pedestal-clue")!;
+const archway = document.getElementById("archway-lock")!;
+const storyBox = document.getElementById("story-text")!;
+// const magicSphere = document.getElementById("magic-sphere")!;
+const musicBtn = document.getElementById("music") as HTMLButtonElement;
+const castle = document.getElementById("castle-svg")!;
+const nightCastle = document.getElementById("NightCastle")!;
+const tree = document.getElementById("Tree")!;
+const river = document.getElementById("River")!;
+
+// setup music button behavior using CSS classes
+if (musicBtn) {
+  // cross overlay when paused/muted
+  const cross = document.createElement("span");
+  cross.textContent = "✕";
+  cross.className = "music-cross"; // initially showing (not playing)
+  musicBtn.appendChild(cross);
+
+  function updateCross() {
+    const shouldShow = audio.paused || audio.muted === true;
+    cross.classList.toggle("hidden", !shouldShow);
+  }
+
+  function syncAudioWithPhase() {
+    const shouldPlay = !audio.paused;
+
+    if (cycleStage === 0 && currentTrack !== "day") {
+      currentTrack = "day";
+      audio.src = audioSources.day;
+      audio.loop = true;
+      if (shouldPlay) {
+        audio.play().catch(() => {});
+      }
+    } else if (cycleStage === 1 && currentTrack !== "night") {
+      currentTrack = "night";
+      audio.src = audioSources.night;
+      audio.loop = true;
+      if (shouldPlay) {
+        audio.play().catch(() => {});
+      }
+    } else if (cycleStage >= 2 && currentTrack !== "neutral") {
+      currentTrack = "neutral";
+      audio.src = audioSources.neutral;
+      audio.loop = true;
+      if (shouldPlay) {
+        audio.play().catch(() => {});
+      }
+    }
+  }
+
+  musicBtn.addEventListener("click", async () => {
+    try {
+      if (audio.paused) {
+        syncAudioWithPhase();
+        await audio.play();
+      } else {
+        audio.pause();
+      }
+    } catch (_) {
+      // ignore
+    } finally {
+      updateCross();
+    }
+  });
+
+  audio.addEventListener("play", updateCross);
+  audio.addEventListener("pause", updateCross);
+  audio.addEventListener("volumechange", updateCross);
+  updateCross();
+}
+
+pedestal.addEventListener("click", handlePedestalClick);
+archway.addEventListener("click", handleArchwayClick);
 
 function animate() {
   if (animationFrameId) {
@@ -50,13 +162,32 @@ function animate() {
     const elapsedTime = timestamp - startTime;
     const progress = (elapsedTime / duration) % 1;
 
-    // --- TOGGLE LOGIC (UNCHANGED) ---
     if (progress < lastProgress) {
       hasToggledInCycle = false;
     }
     if (progress > 0.95 && !hasToggledInCycle) {
-      document.body.classList.toggle("dark-mode");
-      hasToggledInCycle = true;
+      // Only allow two toggles total: day -> night -> day, then lock in day
+      if (cycleStage < 2) {
+        document.body.classList.toggle("dark-mode");
+        hasToggledInCycle = true;
+        isNight = !isNight;
+        cycleStage += 1;
+        handlePhaseAudioChange();
+        updateCursorForPhase();
+        clearPedestal();
+        castle.style.opacity = "0";
+        if (cycleStage === 2) {
+          pedestal.remove();
+          nightCastle.remove();
+          tree.remove();
+          river?.remove();
+          castle.style.opacity = "1";
+        }
+      } else {
+        hasToggledInCycle = true; // prevent repeated work within the same cycle end
+        document.body.classList.toggle("dark-mode");
+        isNight = !isNight;
+      }
     }
     lastProgress = progress;
 
@@ -85,5 +216,73 @@ function animate() {
   animationFrameId = requestAnimationFrame(animationStep);
 }
 animate();
+
+function handlePhaseAudioChange() {
+  const wasPlaying = !audio.paused;
+
+  // cycleStage after increment: 1 means switched to night, 2 means switched back to day forever
+  if (cycleStage === 1) {
+    // switched to night
+    if (currentTrack !== "night") {
+      currentTrack = "night";
+      audio.src = audioSources.night;
+      audio.loop = true;
+      if (wasPlaying) {
+        audio.play().catch(() => {});
+      }
+    }
+  } else if (cycleStage >= 2) {
+    // switched back to day, now neutral forever
+    if (currentTrack !== "neutral") {
+      currentTrack = "neutral";
+      audio.src = audioSources.neutral;
+      audio.loop = true;
+      if (wasPlaying) {
+        audio.play().catch(() => {});
+      }
+    }
+  }
+}
+
+function handlePedestalClick() {
+  if (isNight === false) {
+    storyBox.textContent =
+      "You see a broken pedestal with a faint inscription: '...hold the memory of night...'";
+    pedestal.textContent = "...hold the memory of night...";
+  } else {
+    storyBox.textContent =
+      "The pedestal is whole. A ghostly queen places a [Memory Crystal] upon it. You take the crystal.";
+    pedestal.textContent = "...against the solid truth of day.";
+  }
+}
+
+function handleArchwayClick() {
+  if (playerHasTool === true && isNight === false) {
+    // SUCCESS: Player has the tool AND it is day time.
+    storyBox.innerHTML =
+      "You press the crystal against the solid stone. The archway shimmers and a path opens! <a href='/scenes/mount-miniscule-based-camp/'>You escape to the Based Camp.</a>";
+    // Puzzle solved!
+  } else if (playerHasTool === true && isNight === true) {
+    // FAIL: Player has the tool but it's night.
+    storyBox.textContent =
+      "You hold the crystal to the arch, but it's like pressing a ghost against a ghost. Nothing happens. The inscription said 'against the solid truth of day.'";
+  } else {
+    // FAIL: Player doesn't have the tool yet.
+    storyBox.textContent =
+      "It's a large, inert stone archway. It feels ancient, but it does nothing.";
+  }
+}
+
+function clearPedestal() {
+  pedestal.textContent = "";
+}
+function updateCursorForPhase() {
+  // Use the crystal ball SVG during night; default during day
+  if (isNight) {
+    document.body.style.cursor = "url('/assets/cryastal_ball.svg') 16 16, auto";
+  } else {
+    document.body.style.cursor = "auto";
+  }
+}
 
 window.addEventListener("resize", animate);
