@@ -2,10 +2,6 @@
   font-family: "MedievalSharp";
   src: url("/font/MedievalSharp-Regular.ttf");
 }
-@font-face {
-  font-family: "Rubik";
-  src: url("/font/RubikBurned-Regular.ttf");
-}
 /* ============================================
    CSS CUSTOM PROPERTIES (VARIABLES)
    ============================================ */
