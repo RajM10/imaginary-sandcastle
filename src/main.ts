@@ -1,7 +1,11 @@
 import Castle from "./helper/castle";
+import GateAsset from "./helper/GateAsset";
+import GateNight from "./helper/GateNight";
 import MainRock from "./helper/MainRock";
 import moon from "./helper/moon";
 import NightCastle from "./helper/NightCastle";
+import Pedestal from "./helper/Pedestal";
+import PedestalNight from "./helper/PedestalNight";
 import River from "./helper/River";
 import SandDune1 from "./helper/SandDune1";
 import SandDune2 from "./helper/SandDune2";
@@ -23,17 +27,22 @@ const html =
   Tree() +
   River() +
   NightCastle();
+// GateDay() +
+// GateNight();
 const app = document.querySelector<HTMLDivElement>("#app")!;
 app.innerHTML = `${html}<div id="bg">
 </div>
 <button id="music" aria-label="Toggle music"></button>
-<div id="pedestal-clue" class="interactive-object"></div>
-<div id="archway-lock" class="interactive-object">Archwawy</div>
+<div id="pedestal" class="interactive-object">
+<div id="pedestal-img"></div>
+<div id="pedestal-clue"></div>
+</div>
+<div id="archway-lock" class="interactive-object"></div>
 <div id="story-text"></div>
 `;
 
 //@constants
-let TIME = 5; // in seconds for full cycle
+let TIME = 30; // in seconds for full cycle
 const orbSize = 80;
 
 //@global variable
@@ -69,19 +78,22 @@ audio.addEventListener(
   { once: true },
 );
 
-
 //elements
 const SUN = document.getElementById("sun") as HTMLElement;
 const MOON = document.getElementById("moon") as HTMLElement;
 const pedestal = document.getElementById("pedestal-clue")!;
+const pedestalImg = document.getElementById("pedestal-img")!;
 const archway = document.getElementById("archway-lock")!;
 const storyBox = document.getElementById("story-text")!;
-// const magicSphere = document.getElementById("magic-sphere")!;
 const musicBtn = document.getElementById("music") as HTMLButtonElement;
 const castle = document.getElementById("castle-svg")!;
 const nightCastle = document.getElementById("NightCastle")!;
 const tree = document.getElementById("Tree")!;
 const river = document.getElementById("River")!;
+const pedestalContainer = document.getElementById("pedestal")!;
+
+archway.innerHTML = GateAsset();
+pedestalImg.innerHTML = Pedestal();
 
 // setup music button behavior using CSS classes
 if (musicBtn) {
@@ -144,7 +156,7 @@ if (musicBtn) {
   updateCross();
 }
 
-pedestal.addEventListener("click", handlePedestalClick);
+pedestalContainer.addEventListener("click", handlePedestalClick);
 archway.addEventListener("click", handleArchwayClick);
 
 function animate() {
@@ -172,16 +184,20 @@ function animate() {
         hasToggledInCycle = true;
         isNight = !isNight;
         cycleStage += 1;
+        archway.innerHTML = GateNight();
+        pedestalImg.innerHTML = PedestalNight();
         handlePhaseAudioChange();
         updateCursorForPhase();
         clearPedestal();
         castle.style.opacity = "0";
         if (cycleStage === 2) {
-          pedestal.remove();
+          pedestalImg.innerHTML = Pedestal();
+          pedestalContainer.removeEventListener("click", handlePedestalClick);
           nightCastle.remove();
           tree.remove();
           river?.remove();
           castle.style.opacity = "1";
+          archway.innerHTML = GateAsset();
         }
       } else {
         hasToggledInCycle = true; // prevent repeated work within the same cycle end
@@ -245,6 +261,7 @@ function handlePhaseAudioChange() {
 }
 
 function handlePedestalClick() {
+  console.log("Hello");
   if (isNight === false) {
     storyBox.textContent =
       "You see a broken pedestal with a faint inscription: '...hold the memory of night...'";

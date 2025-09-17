@@ -35,6 +35,10 @@
   --border-color: #312a22;
   --flag-primary: #c24b48;
   --flag-dark: #8c3938;
+
+  /* Archway*/
+  --gate-light-shade: #918d82;
+  --gate-dark-shade: #676765;
 }
 
 /* Dark Theme Colors */
@@ -64,6 +68,9 @@
   --border-color: #111119;
   --flag-primary: #271126;
   --flag-dark: #1e0c1c;
+  /* Archway*/
+  --gate-light-shade: #2D2E40;
+  --gate-dark-shade: #252B32;
 }
 /* ============================================
    SVG FILL CLASSES
@@ -132,4 +139,11 @@
 
 .flag-dark {
   fill: var(--flag-dark);
+}
+
+.gate-light {
+  fill: var(--gate-light-shade);
+}
+.gate-dark {
+  fill: var(--gate-dark-shade);
 }
