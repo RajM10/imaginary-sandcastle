@@ -70,15 +70,15 @@ const audio = new Audio();
 audio.preload = "auto";
 audio.loop = true;
 const audioSources = {
-  day: "/audio/day.ogg",
-  night: "/audio/night.mp3",
-  resolution: "/audio/resolution.ogg",
+  day: "./audio/day.ogg",
+  night: "./audio/night.mp3",
+  resolution: "./audio/neutral.ogg",
 };
 audio.src = audioSources.day;
 
 // Sound effects
-const chimeSound = new Audio("/audio/chime.ogg");
-const crackSound = new Audio("/audio/crack.ogg");
+const chimeSound = new Audio("./audio/chime.ogg");
+const crackSound = new Audio("./audio/crack.wav");
 
 // DOM elements
 const SUN = document.getElementById("sun") as HTMLElement;
@@ -295,7 +295,7 @@ function handlePedestalClick(): void {
     queen.style.opacity = "1";
 
     // Change cursor to crystal
-    document.body.style.cursor = "url('/assets/crystal_cursor.png') 8 8, auto";
+    document.body.style.cursor = "url('./img/crystal_cursor.png') 8 8, auto";
 
     // Update pedestal
     pedestal.textContent = "...against the solid truth of day.";

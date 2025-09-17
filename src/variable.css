@@ -1,6 +1,6 @@
 @font-face {
   font-family: "MedievalSharp";
-  src: url("/font/MedievalSharp-Regular.ttf");
+  src: url("./font/MedievalSharp-Regular.ttf");
 }
 /* ============================================
    CSS CUSTOM PROPERTIES (VARIABLES)

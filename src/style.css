@@ -246,7 +246,7 @@ body.dark-mode #River {
 }
 
 #music {
-  background-image: url("/assets/audio.gif");
+  background-image: url("./audio.gif");
   width: 0.5rem;
   height: 0.5rem;
   position: absolute;
@@ -394,7 +394,7 @@ body.dark-mode #Queen {
 #music {
   width: 24px;
   height: 24px;
-  background: center / cover no-repeat url("/assets/audio.gif");
+  background: center / cover no-repeat url("./audio.gif");
   border: none;
   position: fixed;
   right: 16px;
