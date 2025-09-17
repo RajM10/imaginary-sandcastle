@@ -6,6 +6,7 @@ import moon from "./helper/moon";
 import NightCastle from "./helper/NightCastle";
 import Pedestal from "./helper/Pedestal";
 import PedestalNight from "./helper/PedestalNight";
+import Queen from "./helper/Queen";
 import River from "./helper/River";
 import SandDune1 from "./helper/SandDune1";
 import SandDune2 from "./helper/SandDune2";
@@ -26,7 +27,8 @@ const html =
   moon() +
   Tree() +
   River() +
-  NightCastle();
+  NightCastle() +
+  Queen();
 // GateDay() +
 // GateNight();
 const app = document.querySelector<HTMLDivElement>("#app")!;
@@ -52,6 +54,8 @@ let isNight = false;
 let animationFrameId: number | null = null; // To manage the animation loop
 let playerHasTool = false;
 let cycleStage = 0; // 0: first day, 1: night, 2: back to day and lock
+let nightStartTime: number | null = null;
+let queenAppeared = false;
 
 // audio state
 let currentTrack: "day" | "night" | "neutral" = "day";
@@ -89,12 +93,21 @@ const musicBtn = document.getElementById("music") as HTMLButtonElement;
 const castle = document.getElementById("castle-svg")!;
 const nightCastle = document.getElementById("NightCastle")!;
 const tree = document.getElementById("Tree")!;
+const queen = document.getElementById("Queen")!;
 const river = document.getElementById("River")!;
-const pedestalContainer = document.getElementById("pedestal")!;
+
+// Set initial styles for night elements
+queen.style.opacity = "0";
+queen.style.transition = "opacity 2s ease-in-out";
+nightCastle.style.transition = "opacity 2s ease-in-out";
+tree.style.transition = "opacity 2s ease-in-out";
+river.style.transition = "opacity 2s ease-in-out";
 
 archway.innerHTML = GateAsset();
 pedestalImg.innerHTML = Pedestal();
-
+storyBox.textContent =
+  "You see a broken pedestal with a faint inscription: '...hold the memory of night...'";
+pedestal.textContent = "...hold the memory of night...";
 // setup music button behavior using CSS classes
 if (musicBtn) {
   // cross overlay when paused/muted
@@ -156,7 +169,6 @@ if (musicBtn) {
   updateCross();
 }
 
-pedestalContainer.addEventListener("click", handlePedestalClick);
 archway.addEventListener("click", handleArchwayClick);
 
 function animate() {
@@ -184,25 +196,79 @@ function animate() {
         hasToggledInCycle = true;
         isNight = !isNight;
         cycleStage += 1;
+        nightStartTime = timestamp;
+        queenAppeared = false;
         archway.innerHTML = GateNight();
         pedestalImg.innerHTML = PedestalNight();
         handlePhaseAudioChange();
         updateCursorForPhase();
         clearPedestal();
         castle.style.opacity = "0";
+
+        // Initially hide queen and set opacity to 0
+        queen.style.opacity = "0";
+        queen.style.transition = "opacity 2s ease-in-out";
+
+        // Set initial night text
+        storyBox.textContent =
+          "Night has fallen. The air shimmers with ancient magic...";
+        pedestal.textContent = "...hold the memory of night...";
+
         if (cycleStage === 2) {
-          pedestalImg.innerHTML = Pedestal();
-          pedestalContainer.removeEventListener("click", handlePedestalClick);
-          nightCastle.remove();
-          tree.remove();
-          river?.remove();
-          castle.style.opacity = "1";
-          archway.innerHTML = GateAsset();
+          // Start queen disappearing first
+          setTimeout(() => {
+            queen.style.opacity = "0";
+            storyBox.textContent = "The queen fades away into the mist...";
+          }, 1000);
+
+          // Then fade night castle, tree, and river
+          setTimeout(() => {
+            nightCastle.style.opacity = "0";
+            tree.style.opacity = "0";
+            river.style.opacity = "0";
+            storyBox.textContent =
+              "The night realm dissolves as dawn approaches...";
+          }, 3500);
+
+          // Finally restore day elements
+          setTimeout(() => {
+            pedestalImg.innerHTML = Pedestal();
+            nightCastle.remove();
+            tree.remove();
+            river.remove();
+            queen.remove();
+            castle.style.opacity = "1";
+            archway.innerHTML = GateAsset();
+            storyBox.textContent = "Go left for food town right for the camp";
+            pedestal.textContent = "FoodTown";
+          }, 1000); // Wait for all fade outs to complete
         }
       } else {
         hasToggledInCycle = true; // prevent repeated work within the same cycle end
         document.body.classList.toggle("dark-mode");
         isNight = !isNight;
+      }
+    }
+
+    // Handle Queen appearance after 3 seconds of night
+    if (isNight && nightStartTime && !queenAppeared && cycleStage === 1) {
+      const nightElapsed = timestamp - nightStartTime;
+      if (nightElapsed >= 3000) {
+        // 3 seconds
+        queenAppeared = true;
+        queen.style.opacity = "1";
+
+        // Update text after queen appears
+        setTimeout(() => {
+          storyBox.textContent =
+            "The ghostly queen appears and places a [Memory Crystal] upon the pedestal.";
+          pedestal.textContent = "...against the solid truth of day.";
+        }, 1000); // Wait 1 second after queen appears
+
+        setTimeout(() => {
+          storyBox.textContent = "The pedestal is whole. You take the crystal.";
+          playerHasTool = true;
+        }, 3000); // Wait 3 seconds after queen appears
       }
     }
     lastProgress = progress;
@@ -260,19 +326,6 @@ function handlePhaseAudioChange() {
   }
 }
 
-function handlePedestalClick() {
-  console.log("Hello");
-  if (isNight === false) {
-    storyBox.textContent =
-      "You see a broken pedestal with a faint inscription: '...hold the memory of night...'";
-    pedestal.textContent = "...hold the memory of night...";
-  } else {
-    storyBox.textContent =
-      "The pedestal is whole. A ghostly queen places a [Memory Crystal] upon it. You take the crystal.";
-    pedestal.textContent = "...against the solid truth of day.";
-  }
-}
-
 function handleArchwayClick() {
   if (playerHasTool === true && isNight === false) {
     // SUCCESS: Player has the tool AND it is day time.
@@ -282,7 +335,7 @@ function handleArchwayClick() {
   } else if (playerHasTool === true && isNight === true) {
     // FAIL: Player has the tool but it's night.
     storyBox.textContent =
-      "You hold the crystal to the arch, but it's like pressing a ghost against a ghost. Nothing happens. The inscription said 'against the solid truth of day.'";
+      "You hold the crystal to the arch, but it's like pressing a ghost against a ghost. Nothing happens. The inscription said 'against the solid truth of day.";
   } else {
     // FAIL: Player doesn't have the tool yet.
     storyBox.textContent =
@@ -296,7 +349,7 @@ function clearPedestal() {
 function updateCursorForPhase() {
   // Use the crystal ball SVG during night; default during day
   if (isNight) {
-    document.body.style.cursor = "url('/assets/cryastal_ball.svg') 16 16, auto";
+    document.body.style.cursor = "url('/assets/cryastal_ball.svg') 8 8, auto";
   } else {
     document.body.style.cursor = "auto";
   }
