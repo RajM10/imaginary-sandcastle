@@ -5,7 +5,9 @@ import MainRock from "./helper/MainRock";
 import moon from "./helper/moon";
 import NightCastle from "./helper/NightCastle";
 import Pedestal from "./helper/Pedestal";
+import PedestalDynamic from "./helper/PedestalDynamic";
 import PedestalNight from "./helper/PedestalNight";
+import Portal from "./helper/Portal";
 import Queen from "./helper/Queen";
 import River from "./helper/River";
 import SandDune1 from "./helper/SandDune1";
@@ -107,7 +109,7 @@ function initializeAudio(): void {
         });
       }
     },
-    { once: true },
+    { once: true }
   );
 }
 
@@ -287,7 +289,6 @@ function handlePedestalClick(): void {
     // Second click - trigger the transformation sequence
     storyBox.textContent =
       "The ghostly queen appears and places a [Memory Crystal] upon the pedestal. You take it.";
-
     // Play chime sound
     chimeSound.play().catch(() => {});
 
@@ -349,7 +350,9 @@ function moonSetsAndSunRises(): void {
   // Moon sets (moves down and fades)
   const moonSetY = screenHeight + orbSize;
   MOON.style.transition = "transform 3s ease-in-out, opacity 2s ease-in-out";
-  MOON.style.transform = `translate(${(screenWidth - orbSize) * 0.7}px, ${moonSetY}px)`;
+  MOON.style.transform = `translate(${
+    (screenWidth - orbSize) * 0.7
+  }px, ${moonSetY}px)`;
   MOON.style.opacity = "0";
 
   // Sun rises (appears and moves up)
@@ -357,12 +360,16 @@ function moonSetsAndSunRises(): void {
     const sunRiseStartY = screenHeight + orbSize;
     const sunRiseEndY = (screenHeight - orbSize) * 0.3;
 
-    SUN.style.transform = `translate(${(screenWidth - orbSize) * 0.3}px, ${sunRiseStartY}px)`;
+    SUN.style.transform = `translate(${
+      (screenWidth - orbSize) * 0.3
+    }px, ${sunRiseStartY}px)`;
     SUN.style.opacity = "1";
     SUN.style.transition = "transform 3s ease-in-out";
 
     setTimeout(() => {
-      SUN.style.transform = `translate(${(screenWidth - orbSize) * 0.3}px, ${sunRiseEndY}px)`;
+      SUN.style.transform = `translate(${
+        (screenWidth - orbSize) * 0.3
+      }px, ${sunRiseEndY}px)`;
     }, 100);
 
     // Remove dark mode and restore normal background
@@ -373,7 +380,8 @@ function moonSetsAndSunRises(): void {
 
       // Show normal castle
       castle.style.opacity = "1";
-      archway.innerHTML = GateAsset();
+      archway.innerHTML = GateAsset() + Portal();
+      pedestalImg.innerHTML = PedestalDynamic();
 
       // Reset cursor
       document.body.style.cursor = "auto";
