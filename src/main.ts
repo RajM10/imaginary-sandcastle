@@ -1,4 +1,13 @@
 import Castle from "./helper/castle";
+import Crack1 from "./helper/crack/crack1";
+import crack2 from "./helper/crack/crack2";
+import crack3 from "./helper/crack/crack3";
+import crack4 from "./helper/crack/crack4";
+import crack5 from "./helper/crack/crack5";
+import crack6 from "./helper/crack/crack6";
+import crack7 from "./helper/crack/crack7";
+import crack8 from "./helper/crack/crack8";
+import FlyingRock from "./helper/FlyingRock";
 import GateAsset from "./helper/GateAsset";
 import GateNight from "./helper/GateNight";
 import MainRock from "./helper/MainRock";
@@ -32,8 +41,16 @@ const html =
   Tree() +
   River() +
   NightCastle() +
-  Queen();
-
+  Queen() +
+  FlyingRock() +
+  Crack1() +
+  crack2() +
+  crack3() +
+  crack4() +
+  crack5() +
+  crack6() +
+  crack7() +
+  crack8();
 // Initialize DOM
 const app = document.querySelector<HTMLDivElement>("#app")!;
 app.innerHTML = `${html}<div id="bg">
@@ -77,7 +94,6 @@ const audioSources = {
   resolution: "./audio/neutral.ogg",
 };
 audio.src = audioSources.day;
-
 // Sound effects
 const chimeSound = new Audio("./audio/chime.ogg");
 const crackSound = new Audio("./audio/crack.wav");
@@ -191,9 +207,7 @@ function initializeUI(): void {
   MOON.style.opacity = "1";
 
   // Set magical pink/red background initially
-  document.body.style.background = `
-    radial-gradient(circle at 50% 30%, #4c1d95 0%, #7c2d92 30%, #ec4899 70%, #f97316 100%)
-  `;
+  document.body.style.background = `url('./img/back.png')`;
 
   // Initial content
   archway.innerHTML = GateAsset();
@@ -386,7 +400,7 @@ function moonSetsAndSunRises(): void {
       // Reset cursor
       document.body.style.cursor = "auto";
 
-      // Start normal day/night cycle
+      // Start normal day/night rrrrrr
       puzzleSolved = true;
       isStationary = false;
       normalCycleActive = true;

@@ -146,7 +146,6 @@ body.dark-mode #NightCastle {
 body {
   height: 100dvh;
   width: 100dvw;
-  /* background: radial-gradient(circle at 57.36% 8.94%, var(--sky-origin) 6.25%, var(--sky-end) 100%);x */
   overflow: hidden;
   transition: background 0.1s ease-out;
 }
@@ -173,7 +172,7 @@ img {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 19dvw;
+  height: 18dvw;
   z-index: 2;
   background: var(--sand-dune-primary);
 }
@@ -493,4 +492,63 @@ body.dark-mode #music {
 
 #flavortown-path a:hover {
   color: #ffff88;
+}
+
+.crack {
+  position: absolute;
+}
+
+#crack1 {
+  top: 0;
+  left: 20%;
+}
+#crack2 {
+  top: 20%;
+  right: 0;
+}
+#crack3 {
+  bottom: 0;
+  left: 67%;
+}
+#crack4 {
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+}
+#crack5 {
+  bottom: 0;
+  right: 8%;
+  z-index: 10;
+}
+#crack6 {
+  top: 0;
+  right: 20%;
+}
+#crack7 {
+  left: 0;
+  top: 30%;
+  z-index: 10;
+}
+#crack8 {
+  width: 90.125rem;
+  height: 51.0625rem;
+  flex-shrink: 0;
+  left: 0;
+  right: 0;
+}
+
+#flying-rocks {
+  position: absolute;
+  bottom: clamp(2rem, 6vw, 10rem);
+  width: 40dvw;
+  left: 50dvw;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+#cosmic-rocks {
+  position: absolute;
+  bottom: clamp(2rem, 6vw, 10rem);
+  width: 30dvw;
+  left: 30dvw;
+  z-index: 9;
 }
