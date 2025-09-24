@@ -1,11 +1,13 @@
 import Castle from "./helper/castle";
+import AudioIcon from "./helper/audio";
+import CloudLeft from "./helper/CloudLeft";
+import CloudRight from "./helper/CloudRight";
 import Crack1 from "./helper/crack/crack1";
 import crack2 from "./helper/crack/crack2";
 import crack3 from "./helper/crack/crack3";
 import crack4 from "./helper/crack/crack4";
 import crack5 from "./helper/crack/crack5";
 import crack6 from "./helper/crack/crack6";
-import crack7 from "./helper/crack/crack7";
 import crack8 from "./helper/crack/crack8";
 import FlyingRock from "./helper/FlyingRock";
 import GateAsset from "./helper/GateAsset";
@@ -37,11 +39,6 @@ const html =
   SmallRock2() +
   SmallRock3() +
   Sun() +
-  moon() +
-  Tree() +
-  River() +
-  NightCastle() +
-  Queen() +
   FlyingRock() +
   Crack1() +
   crack2() +
@@ -49,16 +46,22 @@ const html =
   crack4() +
   crack5() +
   crack6() +
-  crack7() +
-  crack8();
+  crack8() +
+  // CloudLeft() +
+  // CloudRight()+
+  moon() +
+  Tree() +
+  River() +
+  NightCastle() +
+  Queen();
 // Initialize DOM
 const app = document.querySelector<HTMLDivElement>("#app")!;
-app.innerHTML = `${html}<div id="bg">
-</div>
-<button id="music" aria-label="Toggle music"></button>
+app.innerHTML = `${html}
+<div id="bg"> </div>
+<button id="music" aria-label="Toggle music">${AudioIcon(true)}</button>
 <div id="pedestal" class="interactive-object">
-<div id="pedestal-img"></div>
 <div id="pedestal-clue"></div>
+<div id="pedestal-img"></div>
 </div>
 <div id="archway-lock" class="interactive-object"></div>
 <div id="story-text"></div>
@@ -67,7 +70,6 @@ app.innerHTML = `${html}<div id="bg">
 </div>
 <div id="magic-particles"></div>
 `;
-
 // Game Constants
 const TIME = 30; // seconds for full cycle
 const orbSize = 80;
@@ -112,6 +114,10 @@ const nightCastle = document.getElementById("NightCastle")!;
 const tree = document.getElementById("Tree")!;
 const queen = document.getElementById("Queen")!;
 const river = document.getElementById("River")!;
+const flyingRocks = document.getElementById("flying-rocks")!;
+const cosmicRocks = document.getElementById("cosmic-rocks")!;
+const cracks = document.querySelectorAll(".crack")!;
+const mainCrack = document.getElementById("main-crack")!;
 const magicParticles = document.getElementById("magic-particles")!;
 
 // Initialize audio
@@ -125,7 +131,7 @@ function initializeAudio(): void {
         });
       }
     },
-    { once: true }
+    { once: true },
   );
 }
 
@@ -133,14 +139,9 @@ function initializeAudio(): void {
 function setupMusicButton(): void {
   if (!musicBtn) return;
 
-  const cross = document.createElement("span");
-  cross.textContent = "✕";
-  cross.className = "music-cross";
-  musicBtn.appendChild(cross);
-
-  function updateCross() {
-    const shouldShow = audio.paused || audio.muted === true;
-    cross.classList.toggle("hidden", !shouldShow);
+  function updateAudioIcon() {
+    const isActive = !audio.paused && !audio.muted;
+    musicBtn.innerHTML = AudioIcon(isActive);
   }
 
   function syncAudioWithPhase() {
@@ -172,14 +173,14 @@ function setupMusicButton(): void {
     } catch (_) {
       // ignore
     } finally {
-      updateCross();
+      updateAudioIcon();
     }
   });
 
-  audio.addEventListener("play", updateCross);
-  audio.addEventListener("pause", updateCross);
-  audio.addEventListener("volumechange", updateCross);
-  updateCross();
+  audio.addEventListener("play", updateAudioIcon);
+  audio.addEventListener("pause", updateAudioIcon);
+  audio.addEventListener("volumechange", updateAudioIcon);
+  updateAudioIcon();
 }
 
 // Initialize UI
@@ -207,7 +208,7 @@ function initializeUI(): void {
   MOON.style.opacity = "1";
 
   // Set magical pink/red background initially
-  document.body.style.background = `url('./img/back.png')`;
+  document.body.style.backgroundImage = `url('./img/back.png')`;
 
   // Initial content
   archway.innerHTML = GateAsset();
@@ -264,63 +265,63 @@ function createMagicParticles(): void {
 }
 
 // Handle pedestal clicks
-function handlePedestalClick(): void {
+function handlePedestalClick() {
   pedestalClickCount++;
 
   if (pedestalClickCount === 1) {
     // First click - change to dark side
-    storyBox.textContent =
-      "The pedestal responds! Darkness spreads across the realm...";
+
     pedestal.textContent = "...hold the memory of night...";
 
     // Add magic particles
     createMagicParticles();
     magicParticles.style.opacity = "1";
-
-    // Change to dark mode
-    document.body.classList.add("dark-mode");
-    isNight = true;
-
-    // Change to dark background
-    document.body.style.background = `
+    setTimeout(() => {
+      document.body.classList.add("dark-mode");
+      isNight = true;
+      // Change to dark background
+      document.body.style.background = `
       radial-gradient(circle at 50% 30%, #1a0033 0%, #000511 100%)
     `;
-
-    // Show night elements
-    archway.innerHTML = GateNight();
-    castle.style.opacity = "0";
-    nightCastle.style.opacity = "1";
-    tree.style.opacity = "1";
-    river.style.opacity = "1";
+      archway.innerHTML = GateNight();
+      castle.style.opacity = "0";
+      nightCastle.style.opacity = "1";
+      tree.style.opacity = "1";
+      river.style.opacity = "1";
+      if (!audio.paused) {
+        currentTrack = "night";
+        audio.src = audioSources.night;
+        audio.play().catch(() => {});
+      }
+      pedestal.textContent = "";
+      storyBox.textContent =
+        "The pedestal responds! Darkness spreads across the realm...";
+    }, 5000);
 
     // Change audio to night
-    if (!audio.paused) {
-      currentTrack = "night";
-      audio.src = audioSources.night;
-      audio.play().catch(() => {});
-    }
   } else if (pedestalClickCount === 2) {
     // Second click - trigger the transformation sequence
     storyBox.textContent =
-      "The ghostly queen appears and places a [Memory Crystal] upon the pedestal. You take it.";
+      "The ghostly queen appears and gives a [Memory Crystal]. You take it.";
     // Play chime sound
     chimeSound.play().catch(() => {});
 
     // Show queen
     queen.style.opacity = "1";
-
+    setTimeout(() => {
+      storyBox.textContent = "Place Memory Crystal on pedestal.";
+    }, 3000);
     // Change cursor to crystal
-    document.body.style.cursor = "url('./img/crystal_cursor.png') 8 8, auto";
-
-    // Update pedestal
-    pedestal.textContent = "...against the solid truth of day.";
-    pedestal.style.color = "#ffff88";
-    pedestalImg.innerHTML = PedestalNight();
+    document.body.style.cursor = "url('/img/crystal_ball.svg') 8 8, auto";
 
     // After 3 seconds, trigger the transformation
+  } else if (pedestalClickCount === 3) {
+    pedestal.textContent = "";
+    pedestal.style.color = "#ffff88";
+    pedestalImg.innerHTML = PedestalNight();
     setTimeout(() => {
       triggerTransformation();
-    }, 3000);
+    }, 5000);
   }
 }
 
@@ -357,9 +358,21 @@ function triggerTransformation(): void {
 }
 
 // Moon sets and sun rises sequence
-function moonSetsAndSunRises(): void {
+function moonSetsAndSunRises() {
   const screenWidth = window.innerWidth;
   const screenHeight = window.innerHeight;
+
+  // Remove cracks and rocks with transition
+  cracks.forEach((crack) => {
+    (crack as HTMLElement).style.transition = "opacity 3s ease-in-out";
+    (crack as HTMLElement).style.opacity = "0";
+  });
+  mainCrack.style.transition = "opacity 3s ease-in-out";
+  mainCrack.style.opacity = "0";
+  flyingRocks.style.transition = "opacity 3s ease-in-out";
+  flyingRocks.style.opacity = "0";
+  cosmicRocks.style.transition = "opacity 3s ease-in-out";
+  cosmicRocks.style.opacity = "0";
 
   // Moon sets (moves down and fades)
   const moonSetY = screenHeight + orbSize;
@@ -407,8 +420,7 @@ function moonSetsAndSunRises(): void {
 
       // Change audio back to day
       if (!audio.paused) {
-        currentTrack = "day";
-        audio.src = audioSources.day;
+        audio.src = audioSources.resolution;
         audio.play().catch(() => {});
       }
 
@@ -421,6 +433,11 @@ function moonSetsAndSunRises(): void {
         tree.remove();
         river.remove();
         queen.remove();
+        // Remove cracks and rocks permanently
+        cracks.forEach((crack) => crack.remove());
+        mainCrack.remove();
+        flyingRocks.remove();
+        cosmicRocks.remove();
       }, 2000);
 
       storyBox.textContent =
@@ -572,14 +589,85 @@ function addEnvironmentalClickHandlers(): void {
     });
   });
 
+  // Main rock with special animation
+  const mainRockElement = document.getElementById("MainRock");
+  mainRockElement?.addEventListener("click", () => {
+    // Animate main rock moving up
+    mainRockElement.style.transition = "transform 1s ease-in-out";
+    mainRockElement.style.transform = "translateY(-20px)";
+
+    // Show "nothing found here" text
+    const messageElement = document.createElement("div");
+    messageElement.textContent = "Nothing found here...";
+    messageElement.style.cssText = `
+      position: absolute;
+      left: ${mainRockElement.offsetLeft + mainRockElement.offsetWidth / 2}px;
+      top: ${mainRockElement.offsetTop - 30}px;
+      color: #888;
+      font-size: 14px;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      pointer-events: none;
+      transform: translateX(-50%);
+    `;
+    document.body.appendChild(messageElement);
+
+    setTimeout(() => {
+      messageElement.style.opacity = "1";
+    }, 500);
+
+    setTimeout(() => {
+      mainRockElement.style.transform = "translateY(0px)";
+      messageElement.style.opacity = "0";
+      setTimeout(() => {
+        messageElement.remove();
+      }, 1000);
+    }, 2000);
+  });
+
   [
-    document.getElementById("MainRock"),
     document.getElementById("SmallRock2"),
     document.getElementById("SmallRock3"),
   ].forEach((rock) => {
     rock?.addEventListener("click", () => {
       storyBox.textContent = "Weathered stones that have witnessed ages pass.";
     });
+  });
+
+  // Add click handlers for cracks with story about tearing realm apart
+  cracks.forEach((crack, index) => {
+    crack.addEventListener("click", () => {
+      const crackStories = [
+        "A deep crack tears through the fabric of this realm...",
+        "This fissure speaks of ancient wounds in reality.",
+        "The crack pulses with otherworldly energy, splitting the world.",
+        "Through this tear, you glimpse the void between realms.",
+        "The fracture grows, threatening to unravel everything.",
+        "Dark energy seeps through this crack in existence.",
+        "This rift echoes with the screams of a dying world.",
+        "The crack spreads like a scar across the magical landscape.",
+      ];
+      storyBox.textContent =
+        crackStories[index] || "A mysterious crack in the realm's foundation.";
+    });
+  });
+
+  // Add click handler for main crack
+  mainCrack.addEventListener("click", () => {
+    storyBox.textContent =
+      "The great fracture - a wound that runs to the heart of this realm, bleeding magic into the void.";
+  });
+
+  // Add click handlers for flying rocks
+  flyingRocks.addEventListener("click", () => {
+    storyBox.textContent =
+      "Stones torn from their earthly bonds, floating in defiance of nature's laws.";
+  });
+
+  // Add click handler for cosmic rocks
+  cosmicRocks.addEventListener("click", () => {
+    storyBox.textContent =
+      "Celestial fragments that have fallen from shattered stars, pulsing with cosmic energy.";
   });
 
   // Tree, river, queen click handlers (only if still exist)

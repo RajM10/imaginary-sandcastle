@@ -1,6 +1,6 @@
 @font-face {
   font-family: "MedievalSharp";
-  src: url("./font/MedievalSharp-Regular.ttf");
+  src: url("/assets/font/MedievalSharp-Regular.ttf");
 }
 /* ============================================
    CSS CUSTOM PROPERTIES (VARIABLES)
@@ -74,7 +74,9 @@
 /* ============================================
    SVG FILL CLASSES
    ============================================ */
-
+.text-fill {
+  fill: var(--text);
+}
 /* Sand Dune Fill Classes */
 .sand-dune-primary {
   fill: var(--sand-dune-primary);
