@@ -28,7 +28,7 @@
 @media (max-width: 768px) {
   #SandDune3 {
     right: clamp(-10vw, -5rem, 0);
-    width: min(60vw, 80rem);
+    width: min(55vw, 70rem);
     bottom: clamp(0.5rem, 6vw, 12rem);
   }
 }
@@ -132,5 +132,611 @@
     right: clamp(1rem, 10vw, 15rem);
     bottom: clamp(0.2rem, 2vw, 3rem);
     width: min(15vw, 120px);
+  }
+}
+
+/* ===== COMPREHENSIVE RESPONSIVE DESIGN ===== */
+
+/* Base responsive typography and spacing */
+@media (max-width: 768px) {
+  body {
+    font-size: clamp(14px, 2.5vw, 16px);
+    line-height: 1.5;
+  }
+
+  #app {
+    min-height: 100vh;
+    padding: clamp(0.5rem, 2vw, 1rem);
+  }
+}
+
+/* Story text responsive design */
+@media (max-width: 768px) {
+  #story-text {
+    bottom: clamp(0.5rem, 2vh, 1rem);
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100vw - 2rem);
+    max-width: 70vw;
+    padding: clamp(0.4rem, 2vw, 0.6rem);
+    font-size: clamp(0.7rem, 2vw, 0.8rem);
+    line-height: 1.2;
+    border-radius: clamp(6px, 1vw, 8px);
+    max-height: 20vh;
+  }
+}
+
+@media (max-width: 480px) {
+  #story-text {
+    width: calc(100vw - 1rem);
+    padding: clamp(0.3rem, 2vw, 0.5rem);
+    font-size: clamp(0.65rem, 1.8vw, 0.75rem);
+    max-height: 25vh;
+    bottom: clamp(0.3rem, 1.5vh, 0.8rem);
+  }
+}
+
+@media (max-width: 320px) {
+  #story-text {
+    padding: clamp(0.25rem, 1.5vw, 0.4rem);
+    font-size: clamp(0.6rem, 1.5vw, 0.7rem);
+    line-height: 1.2;
+    max-height: 30vh;
+  }
+}
+
+/* Pedestal responsive design */
+@media (max-width: 768px) {
+  #pedestal {
+    bottom: clamp(1rem, 4vw, 3rem);
+    left: clamp(1rem, 4vw, 3rem);
+    width: clamp(8rem, 15vw, 12rem);
+  }
+
+  #pedestal-clue {
+    font-size: clamp(0.8rem, 2.2vw, 1rem);
+    max-width: clamp(8rem, 16vw, 12rem);
+    line-height: 1.2;
+  }
+}
+
+@media (max-width: 480px) {
+  #pedestal {
+    bottom: clamp(0.5rem, 3vw, 2rem);
+    left: clamp(0.5rem, 3vw, 2rem);
+    width: clamp(6rem, 12vw, 10rem);
+  }
+
+  #pedestal-clue {
+    font-size: clamp(0.7rem, 2vw, 0.9rem);
+    max-width: clamp(6rem, 14vw, 10rem);
+  }
+}
+
+@media (max-width: 320px) {
+  #pedestal {
+    bottom: clamp(0.2rem, 2vw, 1rem);
+    left: clamp(0.2rem, 2vw, 1rem);
+    width: clamp(5rem, 10vw, 8rem);
+  }
+
+  #pedestal-clue {
+    font-size: clamp(0.6rem, 1.8vw, 0.8rem);
+    max-width: clamp(5rem, 12vw, 8rem);
+  }
+}
+
+/* Archway responsive design */
+@media (max-width: 768px) {
+  #archway-lock {
+    width: clamp(12rem, 20vw, 16rem);
+    bottom: clamp(6rem, 10vw, 8rem);
+    right: clamp(0.5rem, 2vw, 1rem);
+  }
+}
+
+@media (max-width: 480px) {
+  #archway-lock {
+    width: clamp(10rem, 18vw, 14rem);
+    bottom: clamp(4rem, 8vw, 6rem);
+    right: clamp(0.2rem, 1.5vw, 0.8rem);
+  }
+}
+
+@media (max-width: 320px) {
+  #archway-lock {
+    width: clamp(8rem, 16vw, 12rem);
+    bottom: clamp(3rem, 6vw, 5rem);
+    right: clamp(0.1rem, 1vw, 0.5rem);
+  }
+}
+
+/* Music button responsive design */
+@media (max-width: 768px) {
+  #music {
+    width: clamp(36px, 6vw, 48px);
+    height: clamp(36px, 6vw, 48px);
+    right: clamp(12px, 3vw, 20px);
+    bottom: clamp(12px, 3vw, 20px);
+    padding: clamp(4px, 1vw, 6px);
+  }
+
+  #music svg {
+    width: clamp(20px, 4vw, 28px);
+    height: clamp(20px, 4vw, 28px);
+  }
+}
+
+@media (max-width: 480px) {
+  #music {
+    width: clamp(32px, 5vw, 42px);
+    height: clamp(32px, 5vw, 42px);
+    right: clamp(8px, 2.5vw, 16px);
+    bottom: clamp(8px, 2.5vw, 16px);
+  }
+
+  #music svg {
+    width: clamp(18px, 3.5vw, 24px);
+    height: clamp(18px, 3.5vw, 24px);
+  }
+}
+
+@media (max-width: 320px) {
+  #music {
+    width: clamp(28px, 4vw, 38px);
+    height: clamp(28px, 4vw, 38px);
+    right: clamp(6px, 2vw, 12px);
+    bottom: clamp(6px, 2vw, 12px);
+  }
+
+  #music svg {
+    width: clamp(16px, 3vw, 22px);
+    height: clamp(16px, 3vw, 22px);
+  }
+}
+
+/* Sun and Moon responsive positioning */
+@media (max-width: 768px) {
+  #sun,
+  #moon {
+    width: clamp(60px, 12vw, 100px);
+    height: clamp(60px, 12vw, 100px);
+    top: clamp(2rem, 8vw, 6rem);
+    left: clamp(2rem, 10vw, 8rem);
+  }
+}
+
+@media (max-width: 480px) {
+  #sun,
+  #moon {
+    width: clamp(50px, 10vw, 80px);
+    height: clamp(50px, 10vw, 80px);
+    top: clamp(1rem, 6vw, 4rem);
+    left: clamp(1rem, 8vw, 6rem);
+  }
+}
+
+@media (max-width: 320px) {
+  #sun,
+  #moon {
+    width: clamp(40px, 8vw, 60px);
+    height: clamp(40px, 8vw, 60px);
+    top: clamp(0.5rem, 4vw, 3rem);
+    left: clamp(0.5rem, 6vw, 4rem);
+  }
+}
+
+/* Tree responsive positioning */
+@media (max-width: 768px) {
+  #Tree {
+    right: clamp(1rem, 25vw, 28rem);
+    bottom: clamp(1.5rem, 10vw, 12rem);
+    width: min(35vw, 450px);
+  }
+}
+
+@media (max-width: 480px) {
+  #Tree {
+    right: clamp(0.5rem, 22vw, 25rem);
+    bottom: clamp(1rem, 8vw, 10rem);
+    width: min(40vw, 380px);
+  }
+}
+
+@media (max-width: 320px) {
+  #Tree {
+    right: clamp(0.2rem, 20vw, 22rem);
+    bottom: clamp(0.5rem, 6vw, 8rem);
+    width: min(45vw, 320px);
+  }
+}
+
+/* River responsive positioning */
+@media (max-width: 768px) {
+  #River {
+    left: clamp(0.5rem, 8vw, 10rem);
+    bottom: clamp(1rem, 15vw, 8rem);
+    width: min(45vw, 600px);
+  }
+}
+
+@media (max-width: 480px) {
+  #River {
+    left: clamp(0.2rem, 6vw, 8rem);
+    bottom: clamp(0.5rem, 12vw, 6rem);
+    width: min(50vw, 500px);
+  }
+}
+
+@media (max-width: 320px) {
+  #River {
+    left: clamp(0rem, 4vw, 6rem);
+    bottom: clamp(0.2rem, 10vw, 5rem);
+    width: min(55vw, 400px);
+  }
+}
+
+/* Queen responsive positioning */
+@media (max-width: 768px) {
+  #Queen {
+    right: clamp(1rem, 22vw, 23rem);
+    bottom: clamp(1.5rem, 10vw, 11rem);
+    width: min(8vw, 60px);
+  }
+}
+
+@media (max-width: 480px) {
+  #Queen {
+    right: clamp(0.5rem, 20vw, 21rem);
+    bottom: clamp(1rem, 8vw, 9rem);
+    width: min(10vw, 50px);
+  }
+}
+
+@media (max-width: 320px) {
+  #Queen {
+    right: clamp(0.2rem, 18vw, 19rem);
+    bottom: clamp(0.5rem, 6vw, 7rem);
+    width: min(12vw, 45px);
+  }
+}
+
+/* Flying rocks responsive positioning */
+@media (max-width: 768px) {
+  #flying-rocks {
+    bottom: clamp(1.5rem, 8vw, 10rem);
+    width: min(45vw, 350px);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 480px) {
+  #flying-rocks {
+    bottom: clamp(1rem, 6vw, 8rem);
+    width: min(50vw, 300px);
+  }
+}
+
+@media (max-width: 320px) {
+  #flying-rocks {
+    bottom: clamp(0.5rem, 4vw, 6rem);
+    width: min(55vw, 250px);
+  }
+}
+
+/* Cosmic rocks responsive positioning */
+@media (max-width: 768px) {
+  #cosmic-rocks {
+    bottom: clamp(1rem, 5vw, 8rem);
+    width: min(35vw, 280px);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 480px) {
+  #cosmic-rocks {
+    bottom: clamp(0.8rem, 4vw, 6rem);
+    width: min(40vw, 240px);
+  }
+}
+
+@media (max-width: 320px) {
+  #cosmic-rocks {
+    bottom: clamp(0.5rem, 3vw, 5rem);
+    width: min(45vw, 200px);
+  }
+}
+
+/* Main crack responsive positioning */
+@media (max-width: 768px) {
+  #main-crack {
+    width: min(25vw, 200px);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 480px) {
+  #main-crack {
+    width: min(30vw, 180px);
+  }
+}
+
+@media (max-width: 320px) {
+  #main-crack {
+    width: min(35vw, 150px);
+  }
+}
+
+/* Crack elements responsive positioning */
+@media (max-width: 768px) {
+  .crack {
+    transform: scale(0.8);
+  }
+}
+
+@media (max-width: 480px) {
+  .crack {
+    transform: scale(0.7);
+  }
+}
+
+@media (max-width: 320px) {
+  .crack {
+    transform: scale(0.6);
+  }
+}
+
+/* Portal responsive positioning */
+@media (max-width: 768px) {
+  #portal {
+    height: clamp(16rem, 25vw, 21rem);
+    margin-top: clamp(0.5rem, 2vw, 1rem);
+    transform: translateX(20%);
+  }
+}
+
+@media (max-width: 480px) {
+  #portal {
+    height: clamp(14rem, 22vw, 18rem);
+    transform: translateX(15%);
+  }
+}
+
+@media (max-width: 320px) {
+  #portal {
+    height: clamp(12rem, 20vw, 16rem);
+    transform: translateX(10%);
+  }
+}
+
+/* Cloud responsive positioning */
+@media (max-width: 768px) {
+  #cloud-left {
+    top: clamp(15vw, 18vw, 20vw);
+    width: min(20vw, 150px);
+  }
+
+  #cloud-right {
+    top: clamp(1vw, 3vw, 5vw);
+    width: min(18vw, 130px);
+  }
+}
+
+@media (max-width: 480px) {
+  #cloud-left {
+    top: clamp(12vw, 16vw, 18vw);
+    width: min(25vw, 120px);
+  }
+
+  #cloud-right {
+    top: clamp(0.5vw, 2vw, 4vw);
+    width: min(22vw, 110px);
+  }
+}
+
+@media (max-width: 320px) {
+  #cloud-left {
+    top: clamp(10vw, 14vw, 16vw);
+    width: min(30vw, 100px);
+  }
+
+  #cloud-right {
+    top: clamp(0.2vw, 1.5vw, 3vw);
+    width: min(25vw, 90px);
+  }
+}
+
+/* Background element responsive */
+@media (max-width: 768px) {
+  #bg {
+    height: clamp(12vw, 15vw, 18vw);
+  }
+}
+
+@media (max-width: 480px) {
+  #bg {
+    height: clamp(10vw, 13vw, 16vw);
+  }
+}
+
+@media (max-width: 320px) {
+  #bg {
+    height: clamp(8vw, 11vw, 14vw);
+  }
+}
+
+/* Landscape orientation optimizations */
+@media (orientation: landscape) and (max-height: 600px) {
+  #story-text {
+    bottom: clamp(0.3rem, 1.5vh, 0.8rem);
+    padding: clamp(0.3rem, 1vh, 0.5rem);
+    font-size: clamp(0.6rem, 1.5vh, 0.75rem);
+    max-height: 20vh;
+  }
+
+  #pedestal {
+    bottom: clamp(0.5rem, 2vh, 1rem);
+    left: clamp(0.5rem, 2vh, 1rem);
+    width: clamp(6rem, 8vh, 10rem);
+  }
+
+  #pedestal-clue {
+    font-size: clamp(0.6rem, 1.5vh, 0.8rem);
+  }
+
+  #archway-lock {
+    width: clamp(10rem, 15vh, 14rem);
+    bottom: clamp(3rem, 8vh, 6rem);
+  }
+
+  #music {
+    width: clamp(28px, 4vh, 40px);
+    height: clamp(28px, 4vh, 40px);
+    right: clamp(6px, 2vh, 12px);
+    bottom: clamp(6px, 2vh, 12px);
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  #story-text {
+    border-width: 2px;
+  }
+
+  #music {
+    border-width: 1px;
+  }
+
+  .crack {
+    border-width: 1px;
+  }
+}
+
+/* Accessibility - Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  #sun,
+  #moon,
+  #Tree,
+  #River,
+  #Queen,
+  #NightCastle,
+  #castle-svg {
+    transition: opacity 0.01ms !important;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  #story-text {
+    border-width: 3px;
+    background: rgba(255, 255, 255, 0.95);
+    color: #000000;
+  }
+
+  body.dark-mode #story-text {
+    background: rgba(0, 0, 0, 0.95);
+    color: #ffffff;
+    border-color: #ffffff;
+  }
+
+  #music {
+    border: 2px solid currentColor;
+  }
+}
+
+/* Print styles */
+@media print {
+  #music,
+  #story-text {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Increase touch targets */
+  #pedestal,
+  #archway-lock,
+  #music,
+  #sun,
+  #moon {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Remove hover states */
+  #story-text:hover,
+  #music:hover {
+    transform: none !important;
+    scale: none !important;
+  }
+
+  /* Enhanced tap feedback */
+  #pedestal:active,
+  #archway-lock:active,
+  #music:active {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+}
+
+/* Very wide screens */
+@media (min-width: 1920px) {
+  #story-text {
+    max-width: 600px;
+    font-size: 0.9rem;
+    padding: 0.8rem 1rem;
+  }
+
+  #pedestal {
+    width: 12rem;
+    bottom: 5rem;
+    left: 5rem;
+  }
+
+  #archway-lock {
+    width: 18rem;
+    bottom: 9rem;
+    right: 1rem;
+  }
+
+  #music {
+    width: 40px;
+    height: 40px;
+    right: 20px;
+    bottom: 20px;
+  }
+}
+
+/* Ultra-wide screens */
+@media (min-width: 2560px) {
+  #app {
+    padding: 2rem;
+  }
+
+  #story-text {
+    max-width: 700px;
+    font-size: 0.95rem;
+  }
+
+  #pedestal {
+    width: 14rem;
+    bottom: 6rem;
+    left: 6rem;
   }
 }

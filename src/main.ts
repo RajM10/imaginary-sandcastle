@@ -79,7 +79,7 @@ let lastProgress = 0;
 let hasToggledInCycle = false;
 let isNight = false;
 let animationFrameId: number | null = null;
-
+let isStoryOngoing = false;
 let puzzleSolved = false;
 let pedestalClickCount = 0; // Track pedestal clicks
 let isStationary = true; // Sun/moon start stationary
@@ -268,11 +268,12 @@ function createMagicParticles(): void {
 
 // Handle pedestal clicks
 function handlePedestalClick() {
+  if (isStoryOngoing) return;
   pedestalClickCount++;
 
   if (pedestalClickCount === 1) {
     // First click - change to dark side
-
+    isStoryOngoing = true;
     pedestal.textContent = "...hold the memory of night...";
 
     // Add magic particles
@@ -298,10 +299,13 @@ function handlePedestalClick() {
       pedestal.textContent = "";
       storyBox.textContent =
         "The pedestal responds! Darkness spreads across the realm...";
+      isStoryOngoing = false;
     }, 5000);
 
     // Change audio to night
   } else if (pedestalClickCount === 2) {
+    isStoryOngoing = true;
+
     // Second click - trigger the transformation sequence
     storyBox.textContent =
       "The ghostly queen appears and gives a [Memory Crystal]. You take it.";
@@ -312,17 +316,20 @@ function handlePedestalClick() {
     queen.style.opacity = "1";
     setTimeout(() => {
       storyBox.textContent = "Place Memory Crystal on pedestal.";
+      isStoryOngoing = false;
     }, 3000);
     // Change cursor to crystal
     document.body.style.cursor = "url('/img/crystal_ball.svg') 8 8, auto";
 
     // After 3 seconds, trigger the transformation
   } else if (pedestalClickCount === 3) {
+    isStoryOngoing = true;
     pedestal.textContent = "";
     pedestal.style.color = "#ffff88";
     pedestalImg.innerHTML = PedestalNight();
     setTimeout(() => {
       triggerTransformation();
+      isStoryOngoing = false;
     }, 5000);
   }
 }
