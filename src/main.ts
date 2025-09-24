@@ -47,8 +47,8 @@ const html =
   crack5() +
   crack6() +
   crack8() +
-  // CloudLeft() +
-  // CloudRight()+
+  CloudLeft() +
+  CloudRight() +
   moon() +
   Tree() +
   River() +
@@ -119,6 +119,8 @@ const cosmicRocks = document.getElementById("cosmic-rocks")!;
 const cracks = document.querySelectorAll(".crack")!;
 const mainCrack = document.getElementById("main-crack")!;
 const magicParticles = document.getElementById("magic-particles")!;
+const leftCloud = document.getElementById("cloud-left")!;
+const rightCloud = document.getElementById("cloud-right")!;
 
 // Initialize audio
 function initializeAudio(): void {
@@ -373,7 +375,8 @@ function moonSetsAndSunRises() {
   flyingRocks.style.opacity = "0";
   cosmicRocks.style.transition = "opacity 3s ease-in-out";
   cosmicRocks.style.opacity = "0";
-
+  leftCloud.style.opacity = "1";
+  rightCloud.style.opacity = "1";
   // Moon sets (moves down and fades)
   const moonSetY = screenHeight + orbSize;
   MOON.style.transition = "transform 3s ease-in-out, opacity 2s ease-in-out";

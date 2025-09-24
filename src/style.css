@@ -561,15 +561,12 @@ body.dark-mode #music svg {
 #cloud-left {
   position: absolute;
   left: 0;
-  top: 2dvw;
-  aspect-ratio: 233/147.18;
-  width: 22rem;
+  top: 20dvw;
   opacity: 0;
 }
 #cloud-right {
   position: absolute;
   right: 0;
-  top: 20px;
-  /* opacity: 0; */
-  z-index: 11;
+  top: 2dvw;
+  opacity: 0;
 }
